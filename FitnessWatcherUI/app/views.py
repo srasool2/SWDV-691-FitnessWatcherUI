@@ -1,3 +1,4 @@
+import requests
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
@@ -43,3 +44,10 @@ def register(request):
         profile_form = ProfileForm(prefix='Profile')
         user_form = UserForm(prefix='User')
     return render(request, 'app/register.html', {'profile_form': profile_form, 'user_form': user_form})
+
+def GetBlogs(request):
+    response = requests.get('http://localhost:8001/api/v2/blogs?format=json')
+    if response.status_code == 200:
+        _blogs = response.json()
+    print(_blogs)
+    return render(request, 'app/blogs.html', context={'blogs': _blogs})

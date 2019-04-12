@@ -1,0 +1,196 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block head %}
+<style>
+* {
+    font-family: "Poppins", Helvetica, Arial, "sans-serif";
+}
+
+.cardBorder {
+    border: 2px solid #555;
+}
+
+header nav.bg-light {
+    background-color: #4357AD !important;
+    border-color: #4357AD;
+}
+
+header nav.navbar-light {
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    -webkit-box-shadow: 0 1px 15px 1px rgba(81, 77, 92, 0.5);
+    box-shadow: 0 1px 15px 1px rgba(81, 77, 92, 0.5);
+}
+
+header nav.navbar-light .navbar-brand {
+    color: #fff;
+}
+
+header nav.navbar-light .navbar-brand span {
+    line-height: 45px;
+}
+
+footer .buttons {
+    position: absolute;
+    right: 10px;
+}
+
+footer .buttons a {
+    margin: 0px 10px;
+    color: #48A9A6;
+}
+
+#section-blogs .card-body {
+    padding-left: 150px;
+    position: relative;
+    border: 2px solid #555;
+}
+
+#section-blogs .card-body img {
+    position: absolute;
+    left: 5px;
+    top: 10px;
+    width: 135px;
+    border-radius: 3px;
+}
+
+a {
+    color: #D4B483;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #D4B483;
+    text-decoration: none;
+}
+
+button.button1 {
+    background-color: #4357AD !important;
+}
+
+button.button2 {
+    background-color: #48A9A6 !important;
+}
+
+button.button3 {
+    background-color: #D4B483 !important;
+}
+
+button.button4 {
+    background-color: #C1666B !important;
+}
+
+button.button5 {
+    background-color: #555 !important;
+}
+
+button {
+    border-radius: 3px !important;
+    padding: 10px !important;
+    color: #fff !important;
+    border: none !important;
+}
+
+button:hover {
+    box-shadow: 0px 0px 3px #666;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #555;
+}
+
+section {
+    padding: 0 15px;
+}
+
+#section-banner {
+    margin-top: -1px;
+}
+
+#section-banner .bg {
+    height: 100vh;
+    overflow: hidden;
+    padding: 10px 0;
+    align-items: center;
+    justify-content: space-around;
+    display: flex;
+    float: none;
+    background-image: url('../images/back.jpg');
+    background-size: cover;
+}
+
+#section-banner .bg h1 {
+    color: #fff;
+    text-align: center;
+    padding: 2rem 4rem;
+}
+
+#section-recipes {
+    background: #fff;
+}
+
+#section-recipes h2 {
+    padding-top: 20px;
+}
+
+#section-recipes .card {
+    border: 2px solid #555;
+}
+
+.padding {
+    padding: 20px;
+}
+
+.text-muted {
+    color: #aaa;
+}
+.text-white{
+    color:#fff;
+}
+.recipe-thumb  img{
+    height: 200px;
+}
+.added-card  img{
+    width: 64px;
+}
+.wrap-text{
+        text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.container{
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
+.blog-card img{
+        height: calc(100% - 20px);
+}
+footer{
+    
+    bottom: 0px;
+    width: 100%;
+    z-index: 2;
+}
+footer.fixed{
+    position: fixed
+}
+</style>
+{% endblock %}
+
+
+{% block body %}
+{% for blog in blogs %}
+    <div class="col blog-card col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 padding">
+    <div class="card-body shadow rounded cardBorder">
+        <h5 class="card-title">{{blog.blog_title}}</h5>
+        <p class="card-text">{{blog.blog_summary}} <a href="{{blog.blog_link}}">Read More</a></p>
+    </div>
+    </div>
+{% endfor %}
+{% endblock %}
