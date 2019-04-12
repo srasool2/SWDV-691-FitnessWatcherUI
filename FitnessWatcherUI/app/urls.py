@@ -10,5 +10,6 @@ urlpatterns = [
     url(r'^register/$', views.register, name='register'),
     url(r'^logout/$', auth_views.LogoutView.as_view(template_name='app/home.html'), name='logout'),
     url(r'blogs/$', views.GetBlogs, name='blogs'),
-
+    url(r'workouts/$', views.GetWorkoutPlans, name='workouts'),
+    
 ]

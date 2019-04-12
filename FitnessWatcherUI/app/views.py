@@ -51,3 +51,10 @@ def GetBlogs(request):
         _blogs = response.json()
     print(_blogs)
     return render(request, 'app/blogs.html', context={'blogs': _blogs})
+
+def GetWorkoutPlans(request):
+    response = requests.get('http://localhost:8001/api/v2/workouts?format=json')
+    if response.status_code == 200:
+        _workouts = response.json()
+    print(_workouts)
+    return render(request, 'app/workouts.html', context={'workouts': _workouts})
