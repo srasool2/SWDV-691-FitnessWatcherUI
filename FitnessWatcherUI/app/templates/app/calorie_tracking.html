@@ -1,0 +1,111 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block head %}
+{% endblock %}
+
+{% block body %}
+
+<center>
+    <h3>Total Calories: </h3>
+    <h3 id="total_calories">{{total_calories}}</h3>
+
+    <div style="width: 20%;">
+        <div class = "all_sets">
+            <div class="set">
+                <select id="select1" class="browser-default" style="border:0.5px solid black;">
+                <option value="" disabled selected>Choose your exercise</option>
+                {% for exercise in all_exercises %}
+                <option value="{{exercise.exercise_name}}">{{exercise.exercise_name}}</option>
+                {% endfor %}
+                </select>
+                <span><input id="input1" placeholder="number of sets" type="number"></span>
+                <br>
+            </div>
+        </div>
+        <button class="add btn waves-effect waves-light btn-small" style="background-color: black;" type="button">
+            <i class="small material-icons">add_circle</i>
+        </button>
+        <button class="done btn waves-effect waves-light btn-small" style="background-color: black;" type="button">
+                <i class="small material-icons">done</i>
+            </button>
+    </div>
+</center>
+
+<script>
+     var count=1
+     $( ".add" ).click (function() {
+         
+         
+         // get the selected option with specific id.
+         // get the num_sets.
+         var exercise_name = $('#select'+count+' option:selected').text();
+         console.log(exercise_name);
+
+         var num_sets = $('#input'+count).val();
+         console.log(num_sets);
+        
+         var total_calories = $("#total_calories").html();
+         console.log(total_calories)
+
+         // get the calories burned.
+         // add the calories to existing total value.
+         $.ajax({
+            url: "/track_calories/",
+            type: "POST",
+            data: {'exercise_name': exercise_name, 'num_sets': num_sets},
+            cache:false,
+            dataType: "json",
+            success: function(resp){
+                $("#total_calories").html(parseInt(total_calories)+ parseInt(resp.total_calories))
+            }
+        });
+         
+        // add new entry
+         count += 1;
+         var add_div = `
+         <div class="set">
+                <select id="select`+count+`" class="browser-default" style="border:0.5px solid black;">
+                <option value="" disabled selected>Choose your exercise</option>
+                {% for exercise in all_exercises %}
+                <option value="{{exercise.exercise_name}}">{{exercise.exercise_name}}</option>
+                {% endfor %}
+                </select>
+                <span><input id="input`+count+`" placeholder="number of sets" type="number"></span>
+                <br>
+            </div>
+         `
+         $(".all_sets").append(add_div);
+
+     });
+
+     $( ".done" ).click (function() {
+         
+         
+         // get the selected option with specific id.
+         // get the num_sets.
+         var exercise_name = $('#select'+count+' option:selected').text();
+         //console.log(exercise_name);
+
+         var num_sets = $('#input'+count).val();
+         //console.log(num_sets);
+        
+         var total_calories = $("#total_calories").html();
+         //console.log(total_calories)
+
+         // get the calories burned.
+         // add the calories to existing total value.
+         $.ajax({
+            url: "/track_calories/",
+            type: "POST",
+            data: {'exercise_name': exercise_name, 'num_sets': num_sets},
+            cache:false,
+            dataType: "json",
+            success: function(resp){
+                $("#total_calories").html(parseInt(total_calories)+ parseInt(resp.total_calories))
+            }
+        });
+
+     });
+</script>
+{% endblock %}

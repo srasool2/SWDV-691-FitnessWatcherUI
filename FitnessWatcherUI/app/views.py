@@ -1,11 +1,14 @@
 import requests
-from django.shortcuts import render
+import json
+from django.shortcuts import render, HttpResponse
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from app.forms import ProfileForm, UserForm
+from app.models import ExerciseTrack
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def home(request):
@@ -45,6 +48,7 @@ def register(request):
         user_form = UserForm(prefix='User')
     return render(request, 'app/register.html', {'profile_form': profile_form, 'user_form': user_form})
 
+@login_required
 def GetBlogs(request):
     response = requests.get('http://localhost:8001/api/v2/blogs?format=json')
     if response.status_code == 200:
@@ -52,9 +56,28 @@ def GetBlogs(request):
     print(_blogs)
     return render(request, 'app/blogs.html', context={'blogs': _blogs})
 
+@login_required
 def GetWorkoutPlans(request):
     response = requests.get('http://localhost:8001/api/v2/workouts?format=json')
     if response.status_code == 200:
         _workouts = response.json()
     print(_workouts)
     return render(request, 'app/workouts.html', context={'workouts': _workouts})
+
+def calorie_tracking(request):
+    '''
+    Calorie tracking view.
+    '''
+    all_exercises = ExerciseTrack.objects.all()
+    return render(request, 'app/calorie_tracking.html', context={'all_exercises': all_exercises, 'total_calories':0})
+
+@csrf_exempt
+@login_required
+def track_calories(request):
+    if request.is_ajax():
+        exercise_name = request.POST['exercise_name']
+        num_sets = int(request.POST['num_sets'])
+
+        exercise = ExerciseTrack.objects.get(exercise_name=exercise_name)
+        total_calories = exercise.calorie_burnt_per_set * num_sets
+        return HttpResponse(json.dumps({'total_calories': total_calories}))

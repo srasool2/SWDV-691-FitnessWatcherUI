@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^logout/$', auth_views.LogoutView.as_view(template_name='app/home.html'), name='logout'),
     url(r'blogs/$', views.GetBlogs, name='blogs'),
     url(r'workouts/$', views.GetWorkoutPlans, name='workouts'),
-    
+    url(r'calorie_tracking/$', views.calorie_tracking, name='calorie_tracking'),
+    url(r'track_calories/$', views.track_calories, name='track_salories'),
 ]
