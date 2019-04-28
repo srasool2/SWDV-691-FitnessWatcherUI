@@ -50,7 +50,7 @@ def register(request):
 
 @login_required
 def GetBlogs(request):
-    response = requests.get('http://localhost:8001/api/v2/blogs?format=json')
+    response = requests.get('http://srasool2.pythonanywhere.com/api/v2/blogs?format=json')
     if response.status_code == 200:
         _blogs = response.json()
     print(_blogs)
@@ -58,7 +58,7 @@ def GetBlogs(request):
 
 @login_required
 def GetWorkoutPlans(request):
-    response = requests.get('http://localhost:8001/api/v2/workouts?format=json')
+    response = requests.get('http://srasool2.pythonanywhere.com/api/v2/workouts?format=json')
     if response.status_code == 200:
         _workouts = response.json()
     print(_workouts)
