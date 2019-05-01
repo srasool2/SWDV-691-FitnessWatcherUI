@@ -81,7 +81,8 @@
 
      $( ".done" ).click (function() {
          
-         
+         $(".add").attr('disabled', 'disabled');
+
          // get the selected option with specific id.
          // get the num_sets.
          var exercise_name = $('#select'+count+' option:selected').text();
